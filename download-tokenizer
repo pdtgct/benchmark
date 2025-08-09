@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""Download tokenizer files from Hugging Face Hub.
+
+This script downloads only tokenizer-related files for a given model
+repository on the Hugging Face Hub. It is useful when you need the
+model's tokenizer without downloading any model weights.
+"""
+
+from __future__ import annotations
+
+import argparse
+from pathlib import Path
+
+from huggingface_hub import snapshot_download
+
+# Common tokenizer file patterns to include
+TOKENIZER_PATTERNS = [
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "special_tokens_map.json",
+    "tokenizer.model",
+    "vocab.json",
+    "vocab.txt",
+    "merges.txt",
+    "spiece.model",
+    "sentencepiece.*",
+    "chat_template.*",
+    "added_tokens.json",
+]
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Download tokenizer files for a Hugging Face model repository",
+    )
+    parser.add_argument(
+        "-m",
+        "--model",
+        required=True,
+        help="Model repository ID on Hugging Face Hub (e.g. openai/gpt-oss-20b)",
+    )
+    parser.add_argument(
+        "-d",
+        "--dest",
+        default=".",
+        help="Destination directory to place downloaded files (default: current directory)",
+    )
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    dest = Path(args.dest)
+    dest.mkdir(parents=True, exist_ok=True)
+
+    # Download only the tokenizer related files.
+    snapshot_path = snapshot_download(
+        repo_id=args.model,
+        allow_patterns=TOKENIZER_PATTERNS,
+        local_dir=str(dest),
+        local_dir_use_symlinks=False,
+    )
+    print(f"Tokenizer files for {args.model} downloaded to {snapshot_path}")
+
+
+if __name__ == "__main__":
+    main()
