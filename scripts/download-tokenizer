@@ -9,6 +9,7 @@ model's tokenizer without downloading any model weights.
 from __future__ import annotations
 
 import argparse
+import shutil
 from pathlib import Path
 
 from huggingface_hub import snapshot_download
@@ -50,17 +51,24 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    dest = Path(args.dest)
-    dest.mkdir(parents=True, exist_ok=True)
+
+    base_dir = Path(args.dest)
+    model_dir = base_dir / args.model
+    model_dir.mkdir(parents=True, exist_ok=True)
 
     # Download only the tokenizer related files.
     snapshot_path = snapshot_download(
         repo_id=args.model,
         allow_patterns=TOKENIZER_PATTERNS,
-        local_dir=str(dest),
+        local_dir=str(model_dir),
         local_dir_use_symlinks=False,
     )
     print(f"Tokenizer files for {args.model} downloaded to {snapshot_path}")
+
+    # Remove Hugging Face cache directory after download.
+    cache_dir = Path.home() / ".cache" / "huggingface"
+    if cache_dir.exists():
+        shutil.rmtree(cache_dir)
 
 
 if __name__ == "__main__":

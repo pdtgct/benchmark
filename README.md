@@ -33,7 +33,7 @@ See [`llm_bench`](llm_bench) folder for detailed usage.
 
 ## Tokenizer download utility
 
-The `download-tokenizer` script downloads only the tokenizer files for a model
+The `scripts/download-tokenizer` script downloads only the tokenizer files for a model
 from the [Hugging Face Hub](https://huggingface.co).
 
 Install dependencies:
@@ -45,8 +45,8 @@ pip install -r requirements.txt
 Download tokenizer files:
 
 ```sh
-download-tokenizer -m openai/gpt-oss-20b
+./scripts/download-tokenizer -m openai/gpt-oss-20b
 ```
 
 Tokenizer files are placed under `<dest>/<repo_id>/` (defaults to current
-directory).
+directory), for example `openai/gpt-oss-20b/`.
