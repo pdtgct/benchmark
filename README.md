@@ -30,3 +30,7 @@ Captured metrics:
 Metrics summary can be exported to CSV. This way multiple configuration can be scripted over. CSV file can be imported to Google Sheets/Excel or Jupyter for further analysis.
 
 See [`llm_bench`](llm_bench) folder for detailed usage.
+
+## AR web app prototype
+
+A mobile-oriented Web3 + Three.js AR cube prototype is available in [`ar_web3_cube_app`](ar_web3_cube_app).
