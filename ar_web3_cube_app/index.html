@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+    />
+    <title>Web3 AR Cube (Mobile)</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="hud">
+      <h1>Web3 AR Cube</h1>
+      <p id="status">Ready</p>
+      <div class="actions">
+        <button id="connect-wallet">Connect Wallet</button>
+        <button id="start-ar">Start AR</button>
+      </div>
+      <p id="wallet-address">Wallet: not connected</p>
+      <small>
+        Tip: On iPhone Safari, WebXR support is limited. This demo includes an on-screen 3D fallback and touch controls when AR is unavailable.
+      </small>
+    </div>
+
+    <canvas id="scene"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@4.12.1/dist/web3.min.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
